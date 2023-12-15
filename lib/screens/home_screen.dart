@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:craft_app/models/contact_model.dart';
 import 'package:craft_app/providers/contact_provider.dart';
+import 'package:craft_app/providers/theme_mode.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,8 +13,22 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Inicio'),
-        backgroundColor: Colors.blue,
+        title: const Text('Inicio - Agenda'),
+        backgroundColor: Theme.of(context).primaryColor,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.brightness_6),
+            onPressed: () {
+              var brightness = Theme.of(context).brightness;
+              var newTheme = brightness == Brightness.dark
+                  ? ThemeMode.light
+                  : ThemeMode.dark;
+
+              Provider.of<ThemeModel>(context, listen: false)
+                  .setTheme(newTheme);
+            },
+          ),
+        ],
       ),
       body: IndexedStack(
         index: 0,
@@ -60,7 +75,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _showAddContactDialog(BuildContext context, ContactProvider contactProvider) async {
+  Future<void> _showAddContactDialog(
+      BuildContext context, ContactProvider contactProvider) async {
     String name = '';
     String phone = '';
     String email = '';
@@ -92,11 +108,12 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
               TextField(
-                decoration: const InputDecoration(labelText: 'Notas adicionales:'),
+                decoration:
+                    const InputDecoration(labelText: 'Notas adicionales:'),
                 onChanged: (value) {
                   notes = value;
                 },
-              ), 
+              ),
             ],
           ),
           actions: [
@@ -109,7 +126,8 @@ class HomeScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 if (name.isNotEmpty && phone.isNotEmpty) {
-                  contactProvider.addContact(Contact(name: name, phone: phone, email: email, notes: notes));
+                  contactProvider.addContact(Contact(
+                      name: name, phone: phone, email: email, notes: notes));
                 }
                 Navigator.pop(context);
               },

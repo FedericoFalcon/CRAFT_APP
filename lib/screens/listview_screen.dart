@@ -1,13 +1,13 @@
-// listview_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:craft_app/models/contact_model.dart';
 import 'package:craft_app/providers/contact_provider.dart';
+import 'package:craft_app/screens/contactdetails_screen.dart';
 
 class ListViewScreen extends StatelessWidget {
   const ListViewScreen({Key? key}) : super(key: key);
 
-  @override
+ @override
   Widget build(BuildContext context) {
     final contactProvider = Provider.of<ContactProvider>(context);
 
@@ -23,6 +23,14 @@ class ListViewScreen extends StatelessWidget {
             subtitle: Text(contact.phone),
             leading: const Icon(Icons.account_circle),
             trailing: const Icon(Icons.arrow_circle_right_outlined),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ContactDetailsScreen(contact: contact),
+                ),
+              );
+            },
           );
         }).toList(),
       ),
