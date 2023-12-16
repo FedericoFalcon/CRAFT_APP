@@ -2,9 +2,17 @@
 ### Funcionalidades
 
 Ver contactos almacenados (harcodeados, no una base de datos real)
+
+
 Listar contactos
+
+
 Agregar contactos
+
+
 Añadir a favoritos
+
+
 Ver interna de cada contacto con datos completos
 
 ## Respondiendo a las consignas del trabajo:
